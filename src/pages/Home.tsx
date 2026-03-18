@@ -77,7 +77,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen flex flex-col items-center overflow-hidden">
       {/* ── Cinematic Hero ──────────────────────────────────────────────────── */}
-      <div ref={heroRef} className="relative w-full h-[100vh] flex items-center justify-center overflow-hidden">
+      <div ref={heroRef} className="relative w-full h-[calc(100vh-5rem)] flex items-center justify-center overflow-hidden">
         <motion.div style={{ y: y1 }} className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2000&auto=format&fit=crop"
