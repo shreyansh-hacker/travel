@@ -5,10 +5,11 @@ import { MessageSquare, X, Send, Bot, User, Loader2 } from "lucide-react";
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: "user" | "bot"; content: string }[]>([
-    { role: "bot", content: "Hi! I'm your AI travel assistant. How can I help you plan your next luxury adventure?" }
+    { role: "bot", content: "Hi! I'm your AeroVoyage AI assistant. Ask me about destinations, budgets, safety, food — anything travel! 🌍" }
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [sessionId, setSessionId] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -31,12 +32,13 @@ export default function Chatbot() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ message: userMessage, sessionId }),
       });
 
       if (!response.ok) throw new Error("Failed to get response");
 
       const data = await response.json();
+      if (data.sessionId) setSessionId(data.sessionId);
       setMessages(prev => [...prev, { role: "bot", content: data.reply }]);
     } catch (error) {
       console.error(error);
